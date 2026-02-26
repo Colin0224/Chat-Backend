@@ -29,7 +29,6 @@ const data : Message[] = JSON.parse(
         return '[]';
     })
 );
-
 const app = express();
 
 const port = 3000;
