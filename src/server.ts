@@ -22,7 +22,13 @@ type Message = {
 
 const filePath = path.join(import.meta.dirname, 'chat.json');
 
-const data : Message[] = JSON.parse(await readFile(filePath, 'utf8'));
+const data : Message[] = JSON.parse(
+    await readFile(filePath, 'utf8').catch(async (err: any) => {
+        if (err?.code !== 'ENOENT') throw err;
+        await writeFile(filePath, '[]', 'utf8');
+        return '[]';
+    })
+);
 
 const app = express();
 
